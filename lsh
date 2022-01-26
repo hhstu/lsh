@@ -1,0 +1,36 @@
+#! /bin/bash
+
+set -e
+if [ "$1" == "-h" ];then
+    echo ""
+    echo "自动记录 ssh 用户名密码小工具"
+    echo "-------------------------"
+    echo "第一次登陆"
+    echo "   格    式："
+    echo "    lsh { user }@{ ip } { 密码 } { 描述 }"
+    echo "    example：lsh root@192.168.15.1 458456 开发机"
+    echo "后续登陆"
+    echo "    格   式： lsh { 关键字 } ，关键字非必填"
+    echo "    输入序号即可"
+    echo "    example： lsh 192"
+    echo "   "
+    exit
+fi
+
+if [ "$#" == "0" ];then
+    cat -n  ~/.lsh |awk '{print $1" "$2 " " $4}'
+    read -p ":" num
+    sshpass -p $( sed -n "${num}p" ~/.lsh|awk '{print $2 " ssh " $1 }' )
+    exit
+fi
+
+if [ "$#" == "1" ];then
+    cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}'
+    read -p ":" num
+    sshpass -p $( sed -n "${num}p" ~/.lsh|awk '{print $2 " ssh " $1 }' )
+    exit
+fi
+
+echo $@ >> ~/.lsh
+sshpass -p $2 ssh $1
+
