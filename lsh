@@ -1,3 +1,4 @@
+
 #! /bin/bash
 
 set -e
@@ -18,19 +19,19 @@ if [ "$1" == "-h" ];then
 fi
 
 if [ "$#" == "0" ];then
-    cat -n  ~/.lsh |awk '{print $1" "$2 " " $4}'
+    cat -n  ~/.lsh |awk '{print $1" "$2 " " $3}'
     read -p ":" num
-    sshpass -p $( sed -n "${num}p" ~/.lsh|awk '{print $2 " ssh " $1 }' )
+    $( sed -n "${num}p" ~/.lsh|awk '{print " ssh " $1 }' )
     exit
 fi
 
 if [ "$#" == "1" ];then
-    cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}'
+    cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $3}'
     read -p ":" num
-    sshpass -p $( sed -n "${num}p" ~/.lsh|awk '{print $2 " ssh " $1 }' )
+    $( sed -n "${num}p" ~/.lsh|awk '{print " ssh " $1 }' )
     exit
 fi
 
 echo $@ >> ~/.lsh
-sshpass -p $2 ssh $1
-
+ssh-copy-id -f $1
+ssh $1
