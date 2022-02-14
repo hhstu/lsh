@@ -8,7 +8,7 @@ if [ "$1" == "-h" ];then
     echo "-------------------------"
     echo "第一次登陆"
     echo "   格    式："
-    echo "    lsh { user }@{ ip } { 密码 } { 描述 }"
+    echo "    lsh { user }@{ ip }  { 描述 }"
     echo "    example：lsh root@192.168.15.1 458456 开发机"
     echo "后续登陆"
     echo "    格   式： lsh { 关键字 } ，关键字非必填"
