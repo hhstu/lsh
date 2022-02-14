@@ -5,7 +5,7 @@
 <img src="./usage.gif"/>
 
 ## 安装
-- 安装 sshpass
+- ssh-keygen 生成免密信息
 - copy lsh 到 /usr/local/bin 下
 
 ## 使用
