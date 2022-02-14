@@ -7,8 +7,8 @@ if [ "$1" == "-h" ];then
     echo "-------------------------"
     echo "第一次登陆"
     echo "   格    式："
-    echo "    lsh { user }@{ ip } { 密码 } { 描述 }"
-    echo "    example：lsh root@192.168.15.1 458456 开发机"
+    echo "    lsh { user }@{ ip } { 描述 }"
+    echo "    example：lsh root@192.168.15.1  开发机"
     echo "后续登陆"
     echo "    格   式： lsh { 关键字 } ，关键字非必填"
     echo "    输入序号即可"
@@ -24,8 +24,10 @@ if [ "$#" == "0" ];then
     exit
 fi
 
+tmp="@"
+
 if [ "$#" == "1" ];then
-    if [ $1 !=~ @ ];then
+    if [[ $1 !=  *${tmp}* ]];then
       cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $3}'
       read -p ":" num
       $( sed -n "${num}p" ~/.lsh|awk '{print " ssh " $1 }' )
