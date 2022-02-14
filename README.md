@@ -2,7 +2,7 @@
 自动记录 ssh 账户密码的小工具
 
 
-<img src="./usage.gif"/>
+<img src="./lsh-gif.gif"/>
 
 ## 安装
 - ssh-keygen 生成免密信息
