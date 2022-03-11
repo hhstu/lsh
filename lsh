@@ -7,8 +7,8 @@ if [ "$1" == "-h" ];then
     echo "-------------------------"
     echo "第一次登陆"
     echo "   格    式："
-    echo "    lsh { user }@{ ip } { 描述 }"
-    echo "    example：lsh root@192.168.15.1  开发机"
+    echo "    lsh { user }@{ ip } { port } { 描述 }"
+    echo "    example：lsh root@192.168.15.1 22  开发机"
     echo "后续登陆"
     echo "    格   式： lsh { 关键字 } ，关键字非必填"
     echo "    输入序号即可"
@@ -18,9 +18,9 @@ if [ "$1" == "-h" ];then
 fi
 
 if [ "$#" == "0" ];then
-    cat -n  ~/.lsh |awk '{print $1" "$2 " " $3}'
+    cat -n  ~/.lsh |awk '{print $1" "$2 " " $4}'
     read -p ":" num
-    $( sed -n "${num}p" ~/.lsh|awk '{print " ssh " $1 }' )
+    $( sed -n "${num}p" ~/.lsh|awk '{print " ssh -p " $2 " " $1 }' )
     exit
 fi
 
@@ -28,13 +28,13 @@ tmp="@"
 
 if [ "$#" == "1" ];then
     if [[ $1 !=  *${tmp}* ]];then
-      cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $3}'
+      cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}'
       read -p ":" num
-      $( sed -n "${num}p" ~/.lsh|awk '{print " ssh " $1 }' )
+      $( sed -n "${num}p" ~/.lsh|awk '{print " ssh -p  " $2  $1 }' )
       exit
     fi
 fi
 
-ssh-copy-id -f $1
+ssh-copy-id -f -p $2 $1
 echo $@ >> ~/.lsh
-ssh $1
+ssh -p $2 $1
