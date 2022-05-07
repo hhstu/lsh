@@ -28,7 +28,7 @@ tmp="@"
 
 if [ "$#" == "1" ];then
     if [[ $1 !=  *${tmp}* ]];then
-      cat   ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}' | cat  -n
+      cat   ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $3 }' | cat  -n
       read -p ":" num
       $( cat  ~/.lsh |grep $1| sed -n "${num}p"|awk '{print " ssh -p  " $2  " "  $1 }' )
       exit
