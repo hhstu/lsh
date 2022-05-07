@@ -18,7 +18,7 @@ if [ "$1" == "-h" ];then
 fi
 
 if [ "$#" == "0" ];then
-    cat -n  ~/.lsh |awk '{print $1" "$2 " " $4}'
+    cat  -n  ~/.lsh |awk '{print $1" "$2 " " $4}'
     read -p ":" num
     $( sed -n "${num}p" ~/.lsh|awk '{print " ssh -p " $2 " " $1 }' )
     exit
@@ -28,9 +28,9 @@ tmp="@"
 
 if [ "$#" == "1" ];then
     if [[ $1 !=  *${tmp}* ]];then
-      cat -n  ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}'
+      cat   ~/.lsh |grep $1 |awk '{print $1 " " $2 " " $4}' | cat  -n
       read -p ":" num
-      $( sed -n "${num}p" ~/.lsh|awk '{print " ssh -p  " $2  $1 }' )
+      $( cat  ~/.lsh |grep $1| sed -n "${num}p"|awk '{print " ssh -p  " $2  " "  $1 }' )
       exit
     fi
 fi
